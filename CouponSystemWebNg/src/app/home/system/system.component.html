@@ -1,0 +1,36 @@
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						<div class="preview-pic tab-content">
+								<button class="btn-block btn-outline-dark" (click)="Goback()">חזור</button>
+						  <div class="tab-pane active" id="pic-1"><img src="{{choicecoupon.image}}" /></div>
+						</div>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">{{choicecoupon.title}} <b> : קופון </b></h3>
+						<div class="rating">
+							<div class="stars">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							</div>
+							<span class="review-no">{{choicecoupon.amount}}  <b>:  כמות שנשאר</b> </span>
+						</div>
+						<p class="product-description">{{choicecoupon.description}} <b> : תיאור</b> </p>
+						<h4 class="price"><span>₪{{choicecoupon.price}} <b> : מחיר נוכחי</b> </span></h4>
+            <p class="review-no"><b style="color: red"> {{choicecoupon.endDates}}</b> <b> : פג תוקף</b> </p>
+						
+						<p class="product-description">{{choicecoupon.category}} <b> : סוג</b> </p>
+						<div class="action">
+							<button class="add-to-cart btn btn-default" type="button" (click)="addCouponToCart(choicecoupon)">הוסף לסל הקניות</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

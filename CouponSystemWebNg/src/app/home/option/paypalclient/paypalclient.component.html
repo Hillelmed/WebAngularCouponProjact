@@ -1,0 +1,11 @@
+<h3>  paypal  קנייה באמצעות</h3>
+<select [(ngModel)]="finalcoupon">
+ <option [value]="choicecoupon.price">
+  {{choicecoupon.title}} <b>price :</b> {{choicecoupon.price}}₪
+</option>
+</select>
+<h2 *ngIf="paypalLoad">Paypal button is loading</h2>
+<div id="paypal-checkout-btn"></div>
+<div *ngIf="iferror">
+        <span class="btn-danger">{{errorbuy.error}}</span>
+</div>

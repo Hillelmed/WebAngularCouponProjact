@@ -1,0 +1,124 @@
+<button (click)="getdetailsaboutComapny()">Refresh Details</button>
+<div *ngIf="havedetails"><b>Company Details : </b><br>
+  Comapny name : {{details.name}} <br>
+  Email : {{details.email}} <br>
+  ID Company : {{details.id}}
+</div>
+<br>
+<div *ngIf="details.coupons">
+  <select #choice>
+    <option *ngFor="let x of details.coupons" [value]="x">
+      {{x.type}} </option>
+  </select>
+  <label>: מנוע חיפוש</label>
+  <button class="btn-debug">סנן</button>
+  <br>
+  <table class="table table-striped table-secondary">
+    <thead>
+      <tr>
+        <th scope="col">מספר קופון</th>
+        <th scope="col">תיאור קופון</th>
+        <th scope="col">תאריך תחילת קופון</th>
+        <th scope="col">תאריך תפוגה</th>
+        <th scope="col">מחיר</th>
+        <th scope="col">תמונה</th>
+        <th scope="col">כותרת קופון</th>
+        <th scope="col">כמות שנשאר</th>
+        <th scope="col">סוג קופון</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of details.coupons">
+        <th scope="row">{{x.id}}</th>
+        <td>{{x.description}}</td>
+        <td>{{x.startDates}}</td>
+        <td>{{x.endDates}}</td>
+        <td>{{x.price}}₪</td>
+        <td>{{x.image}}</td>
+        <td>{{x.title}}</td>
+        <td>{{x.amount}}</td>
+        <td>{{x.category}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<div>
+  <select (change)="getSelect(select.value)" #select>
+    <option value="add">Add new Coupon </option>
+    <option value="update">Update Coupon</option>
+    <option selected value="delete">Delete Coupon</option>
+    <option value="updatecompany">Update details</option>
+  </select>
+</div>
+
+<div *ngIf="add">
+  <form (ngSubmit)="onSendCoupon()" #addcouponform="ngForm">
+    <h4 class="ui-accordion-header">Send a new coupon / Update a Coupon </h4>
+    <label>title:</label> <input required [(ngModel)]="coupon.title" name="title" #title="ngModel" type="text">
+    <label>description:</label> <input required [(ngModel)]="coupon.description" name="description" #description="ngModel"
+      type="text">
+    <label>startDate:</label> <input required [(ngModel)]="coupon.startDates" name="startDates" #startDates="ngModel"
+      type="date">
+    <label>endDate:</label> <input required [(ngModel)]="coupon.endDates" name="endDates" #endDates="ngModel" type="date">
+    <br><label>amount:</label> <input required [(ngModel)]="coupon.amount" name="amount" #amount="ngModel" type="number">
+    <label>price:</label> <input required [(ngModel)]="coupon.price" name="price" #price="ngModel" type="number">
+    <br>
+    <label>image:</label> <input required [(ngModel)]="coupon.image" name="image" #image="ngModel" type="text">
+    <label>type:</label>
+    <select required [(ngModel)]="coupon.category" name="category" #platform="ngModel">
+      <option *ngFor="let x of ['RESTAURANT','ELECTRICITY','FOOD','HEALTH','SPORTS','CAMPING','TRAVELLING']" [value]="x">
+        {{x}} </option>
+    </select>
+    <label>Id:</label> <input required [(ngModel)]="coupon.id" name="id" #id="ngModel" type="number">
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary" [disabled]="!addcouponform.form.valid">Send Coupon</button>
+    <button type="button" class="btn btn-danger" (click)="addcouponform.reset()">Reset</button>
+  </form>
+</div>
+
+<div *ngIf="update">
+  <form (ngSubmit)="updatecoupon()" #addcouponform="ngForm">
+    <h4 class="ui-accordion-header"> Update a Coupon </h4>
+    <label>endDate:</label> <input required [(ngModel)]="coupon.endDates" name="endDates" #endDates="ngModel" type="date">
+    <label>price:</label> <input required [(ngModel)]="coupon.price" name="price" #price="ngModel" type="number">
+    <br>
+    <label>Id:</label>
+    <select required [(ngModel)]="coupon.id" name="id" #id="ngModel">
+      <option *ngFor="let x of details.coupons" [value]="x.id">
+        {{x.id}} </option>
+    </select>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-secondary" [disabled]="!addcouponform.form.valid">Update Coupon</button>
+    <button type="button" class="btn btn-danger" (click)="addcouponform.reset()">Reset</button>
+  </form>
+</div>
+<div *ngIf="delete">
+  <h3>Remove Coupon</h3>
+  <select #choice>
+    <option *ngFor="let x of details.coupons" [value]="x.id">
+      {{x.id}} </option>
+    </select>
+  <button class="btn-danger" (click)="removeCoupon(choice.value)">Remove Coupon</button>
+</div>
+<div *ngIf="updatecompany">
+  <div>
+    <form (ngSubmit)="onUpdateCompany()" #updateComapnyform="ngForm">
+      <h4 class="ui-accordion-header">Update Company details</h4>
+      <label>Copmany email:</label><input required [(ngModel)]="company.email" name="email" #email="ngModel" type="email">
+      <label>Password :</label> <input required [(ngModel)]="company.password" name="password" #password="ngModel" type="password">
+      <br>
+      <button type="submit" class="btn btn-secondary" [disabled]="!updateComapnyform.form.valid">Update Company</button>
+      <button type="button" class="btn btn-danger" (click)="updateComapnyform.reset()">Reset</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="iferror">
+  Answer From Server :<br>
+  <span class="btn-danger">{{erroraction.error}}</span>
+</div>
+<br>
+<br>
+<h3>רווחים הפסדים בהמשך</h3>

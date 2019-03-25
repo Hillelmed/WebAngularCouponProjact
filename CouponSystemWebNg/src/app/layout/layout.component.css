@@ -1,0 +1,23 @@
+section {
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    display: grid;
+}
+section > * {
+    border: 1px solid rgb(255, 255, 255);
+}
+header, footer {
+    grid-column: span 2;
+}
+aside {
+    grid-column: span 1;
+}
+main {
+    grid-column: span 2;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }

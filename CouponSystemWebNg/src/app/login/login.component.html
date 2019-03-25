@@ -1,0 +1,46 @@
+<small class="text-muted">
+  <div *ngIf="this.ser.ifinsession">
+    <h2>You Logged as:</h2> {{ this.ser.userdetails.email }}
+    <button type="button" class="btn btn-outline-danger" (click)="logout()">log out</button>
+  </div>
+  <div *ngIf="this.ser.loginback">
+    <a>Welcome back </a>{{ this.ser.userdetails.email }}
+    <button type="button" class="btn btn-outline-danger" (click)="logout()">log out</button>
+  </div>
+  <div *ngIf="Blockbyserver">
+    <a>נחסמת על ידי השרת אנא המתן {{timeLeft}} שניות</a>
+    <button type="button" class="btn btn-danger">כפתור סתמי</button>
+  </div>
+  <div *ngIf="!this.ser.iflogin">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <h4 class="ui-accordion-header">Login </h4>
+      <label>Email</label> <input required [(ngModel)]="userdetails.email" name="email" #email="ngModel" type="email">
+      <label>Password</label> <input required [(ngModel)]="userdetails.password" name="password" #password="ngModel"
+        type="password">
+      <a [hidden]="email.valid || email.pristine"> email is required </a>
+      <a [hidden]="password.valid || password.pristine"> password is required </a>
+
+      <br /> <label>platform:</label>
+      <select required [(ngModel)]="userdetails.clienttype" name="clienttype" #clienttype="ngModel">
+        <option *ngFor="let x of ['Customer','Company']" [value]="x"> {{x}} </option>
+      </select>
+      Remember me ? <input class="form-check-inline" type="checkbox" [checked]="saveUsername" (change)="saveUsername = !saveUsername"/>
+      <div [hidden]="clienttype.valid || clienttype.pristine"> Platform is required </div>
+      <button type="submit" class="btn btn-outline-success" [disabled]="!loginForm.form.valid">Login</button>
+      <button type="button" class="btn btn-outline-primary" (click)="loginForm.reset()">Reset</button>
+    </form>
+    <div [hidden]="!wrongconnect" style="color: red">
+        <a>Hmm, that's not the right email or password. Please try again</a>
+      </div>
+    </div>
+    <span style="font-size: 11px;"> 
+      <b>רכישת קופונים בקרופון?</b>
+      חברת קרו (קרופון)  מובילה מהפכה של ממש בתרבות הצריכה בישראל. בדקו את עצמכם ותשאלו את החברים שלכם – כל חיפוש אטרקציה, מוצר או בילוי בישראל כולל בדיקת גרופונים באתר הקופונים המוביל במדינה. בכל רגע נתון תוכלו למצוא בעמוד זה מגוון קופונים למימוש באלפי בתי עסק ברחבי הארץ.
+      <br>
+      <b>אילו קופונים קיימים?</b>
+         הקופונים וההנחות בעמוד זה מקיפים קשת רחבה של בילויים מהנים ואטרקציות שונות כמו הופעות, תערוכות, הצגות, מסעדות, ספא והרשימה עוד ארוכה. לדוגמה, אם אתם מחפשים בילוי משפחתי תוכלו למצוא מגוון קופונים להצגות ילדים, מחזות זמר, חדרי בריחה וכדומה. אם אתם זקוקים להירגע ולנוח, לבד או כזוג, תוכלו לרכוש קופונים לספא, ימי פינוק, טיפולי פנים ועוד. וכמובן, אחד הבילויים האהובים על ישראלים הוא אוכל ומסעדות. בעמוד זה תמצאו מגוון שוברים לארוחות ערב רומנטיות או לארוחות בוקר מפנקות במסעדות מובילות בישראל.
+      <br>
+      <b>איך זה עובד?</b>
+      בחרו את הבילוי המועדף עליכם באתר ורכשו את הקופון. בעת הרכישה הראשונה שלכם תתבקשו להירשם ולבחור שם משתמש וסיסמה. הליך זה נועד להקל על תהליך הרכישה, ולהבטיח שהיא תהיה מאובטחת ככל האפשר. רכישת גרופונים אפשרית באמצעות PayPal לאחר הרכישה, הקופון יהיה זמין בעמוד האישי שלכם, ולנוחות מרבית אנו גם נשלח אותו אליכם במייל. 
+      תוכלו לממש את שובר ההנחה בתיאום עם בית העסק הרלוונטי. שימו לב לתוקף השובר ולתנאי השימוש המצוינים בכל קופון. כל מגבלה או תנאי מיוחד למימוש ההטבה מופיעים בבירור, כך שאין לכם מה לחשוש מ"האותיות הקטנות". אז קדימה, התחילו לבלות!
+    </span>

@@ -1,0 +1,13 @@
+.img-coupons{
+    height: 100px;
+    width: 200px;
+    border-radius: 40%;
+}
+.coupon-box{
+    margin-top: 40px;
+    grid-column: 4 / span 18;
+    grid-row: 1 / span 24;
+    padding: 10px;
+    display : flex;
+    flex-wrap: wrap;
+}

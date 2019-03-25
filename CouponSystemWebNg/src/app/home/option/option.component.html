@@ -1,0 +1,29 @@
+<h6>סל קניות אישי</h6>
+  <div *ngIf="!ifhavecoupon">
+  <table>
+      <td *ngFor="let coupon of couponsarr">
+        <span >
+            <img class="img-coupons" src="{{coupon.image}}" alt="{{coupon.title}}"><br>
+            <h6>{{coupon.title}} : כותרת</h6>
+            <h6>{{coupon.id}} : מספר קופון</h6>
+            <a>{{coupon.description}} : תיאור </a> <br>
+            <a>{{coupon.endDates}} : תאריך תפוגה</a> <br>
+            <a>{{coupon.category}} : סוג קופון</a> <br>
+            <a style="color: red">{{coupon.amount}} : כמות שנשאר</a> <br>
+            <h6>{{coupon.price}}₪ : במחיר</h6>
+            <button (click)="RemoveThisCoupon(coupon)" class="btn btn-outline-danger">מחק</button>
+      </span>
+    </td>
+  </table>
+  <span class="btn-outline-info">Total Price : {{TotalPrice}}₪</span>
+  <br>
+  <div class="btn btn-danger" [hidden]="!wrong" style="color: black" (click)="gologin()">
+      <a> אינך מחובר , לחץ כאן כדי להתחבר</a>
+    </div>
+    <button type="button" class="btn btn-block" (click)="buyfromshopping(coupon)">קנייה</button>
+    <app-paypalclient *ngIf="canbuypaypal"></app-paypalclient>
+  <button type="button" class="btn btn-block" (click)="ClearCartList()">ניקוי סל קניות</button>
+</div>
+  <span style="color: red" *ngIf="ifhavecoupon">
+    ~~סל הקניות ריק~~
+  </span>

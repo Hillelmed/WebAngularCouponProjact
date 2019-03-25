@@ -1,0 +1,31 @@
+<div>
+  <button class="ui-button btn-outline-dark" (click)="getCoupon()">רענון / חזור</button>
+  <br>
+  <select #choice>
+      <option *ngFor="let x of ['RESTAURANT','ELECTRICITY','FOOD','HEALTH','SPORTS','CAMPING','TRAVELLING']" [value]="x">
+        {{x}} </option>
+    </select>
+    <label>: מנוע חיפוש</label>
+    <button class="ui-button btn-outline-dark" (click)="ChoiceByTypeCoupon(choice.value)">סנן</button>
+    <br>
+    <table *ngIf="ViewAllCoupon" class="coupon-box">
+    <td *ngFor="let coupon of couponarr" (click)="buycoupon(coupon)">
+      <span class="dropdown-item">
+      <img class="img-coupons" src="{{coupon.image}}" alt="{{coupon.title}}"><br>
+      <h6>{{coupon.title}}</h6>
+      <h6>{{coupon.amount}} : כמות שנשאר</h6>
+      <h6>{{coupon.price}}₪ : במחיר</h6>
+    </span>
+  </td>
+</table>
+<table *ngIf="ifChoiceCoupon" class="coupon-box">
+    <td *ngFor="let choicecoupon of choicecouponType" (click)="buycoupon(choicecoupon)">
+      <span class="dropdown-item">
+      <img class="img-coupons" src="{{choicecoupon.image}}" alt="{{choicecoupon.title}}"><br>
+      <h6>{{choicecoupon.title}}</h6>
+      <h6>{{choicecoupon.amount}} : כמות שנשאר</h6>
+      <h6>{{choicecoupon.price}}₪ : במחיר</h6>
+    </span>
+  </td>
+</table>
+    </div>

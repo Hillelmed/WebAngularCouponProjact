@@ -1,0 +1,196 @@
+<p>
+  ברוכים הבאים לממשק מנהל
+</p>
+<div>
+  <select class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (change)="getSelectDate(selectdata.value)" #selectdata>
+    <option selected value="allcustomer">לקוחות </option>
+    <option value="allcomapanies">חברות</option>
+    <option value="allcoupons">קופונים</option>
+  </select>
+</div>
+<div *ngIf="ifonallcustomer">
+  all The Customer <br>
+  <table class="table table-striped table-secondary">
+    <thead>
+      <tr>
+        <th scope="col">מספר לקוח</th>
+        <th scope="col">אימייל</th>
+        <th scope="col">שם לקוח</th>
+        <th scope="col">קופונים</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="allCustomer">
+      <tr *ngFor="let x of allCustomer">
+        <th scope="row">{{x.id}}</th>
+        <td>{{x.email}}</td>
+        <td>{{x.custName}}</td>
+        <td>{{x.coupons | json}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="ifonallcomapanies">
+  all The Company <br>
+  <table class="table table-striped table-secondary">
+    <thead>
+      <tr>
+        <th scope="col">מספר חברה</th>
+        <th scope="col">אימייל</th>
+        <th scope="col">שם חברה</th>
+        <th scope="col">קופונים</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="allCompany">
+      <tr *ngFor="let x of allCompany">
+        <th scope="row">{{x.id}}</th>
+        <td>{{x.email}}</td>
+        <td>{{x.name}}</td>
+        <td>{{x.coupons | json}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="ifonallcoupons">
+  all The Coupons <br>
+  <table class="table table-striped table-secondary">
+    <thead>
+      <tr>
+        <th scope="col">מספר קופון</th>
+        <th scope="col">תיאור קופון</th>
+        <th scope="col">מחיר</th>
+        <th scope="col">תמונה</th>
+        <th scope="col">כותרת קופון</th>
+        <th scope="col">סוג קופון</th>
+        <th scope="col">כמות שנשאר</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="allCoupon">
+      <tr *ngFor="let x of allCoupon">
+        <th scope="row">{{x.id}}</th>
+        <td>{{x.description}}</td>
+        <td>{{x.price}}₪</td>
+        <td>{{x.image}}</td>
+        <td>{{x.title}}</td>
+        <td>{{x.type}}</td>
+        <td>{{x.amount}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+  <select class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (change)="getSelect(select.value)" #select>
+    <option value="addcustomer">ליצור משתמש חדש</option>
+    <option value="updatecustomer">לעדכן משתמש קיים</option>
+    <option value="removecustomer">למחוק משתמש</option>
+    <option value="addcompany">ליצור חברה חדשה</option>
+    <option value="updatecompany">לעדכן חברה קיימת</option>
+    <option value="removecompany">למחוק חברה</option>
+  </select>
+</div>
+<div *ngIf="addcustomer">
+  <div>
+    <form (ngSubmit)="onAddCustomer()" #addCustomerform="ngForm">
+      <h4 class="ui-accordion-header">Add a new Customer to CouponSystem</h4>
+      <label>Id:</label> <input required [(ngModel)]="customer.id" name="id" #id="ngModel" type="number">
+      <label>Full name:</label><input required [(ngModel)]="customer.CustName" name="CustName" #name="ngModel" type="text">
+      <label>Email :</label> <input required [(ngModel)]="customer.email" name="email" #email="ngModel" type="email">
+      <label>Password :</label> <input required [(ngModel)]="customer.password" name="password" #password="ngModel"
+        type="password">
+      <br>
+      <button type="submit" class="btn btn-primary" [disabled]="!addCustomerform.form.valid">Add Customer</button>
+      <button type="button" class="btn btn-danger" (click)="addCustomerform.reset()">Reset</button>
+    </form>
+    {{answerfromServer}}
+  </div>
+</div>
+<div *ngIf="updatecustomer">
+  <div>
+    <form (ngSubmit)="onUpdateCustomer()" #UpdateCustomerform="ngForm">
+      <h4 class="ui-accordion-header">Update a Customer from CouponSystem</h4>
+      <label>Id:</label> 
+      <!-- <input required [(ngModel)]="customer.id" name="id" #id="ngModel" type="number"> -->
+      <select required [(ngModel)]="customer.id" name="id" #id="ngModel" >
+        <option *ngFor="let x of allCustomer">
+          {{x.id}} </option>
+        </select>
+      <label>Full name:</label><input required [(ngModel)]="customer.CustName" name="CustName" #CustName="ngModel" type="text">
+      <label>Email:</label> <input required [(ngModel)]="customer.email" name="email" #email="ngModel" type="email">
+      <label>Password :</label> <input required [(ngModel)]="customer.password" name="password" #password="ngModel"
+        type="password">
+      <br>
+      <button type="submit" class="btn btn-secondary" [disabled]="!UpdateCustomerform.form.valid">Update Customer</button>
+      <button type="button" class="btn btn-danger" (click)="UpdateCustomerform.reset()">Reset</button>
+    </form>
+    {{answerfromServer}}
+  </div>
+</div>
+<div *ngIf="removecustomer">
+  <div>
+    <form (ngSubmit)="onRemoveCustomer()" #removeCustomerform="ngForm">
+      <h4 class="ui-accordion-header">Delete Customer From CouponSystem</h4>
+      <label>Id:</label>
+      <select required [(ngModel)]="customer.id" name="id" #id="ngModel" >
+        <option *ngFor="let x of allCustomer">
+          {{x.id}} </option>
+        </select>
+        <br>
+      <button type="submit" class="btn btn-danger" [disabled]="!removeCustomerform.form.valid">REMOVE! Customer</button>
+      <button type="button" class="btn btn-dark" (click)="removeCustomerform.reset()">Reset</button>
+    </form>
+  </div>
+  {{answerfromServer}}
+</div>
+
+<div *ngIf="addcompany">
+  <div>
+    <form (ngSubmit)="onAddCompany()" #addComapnyform="ngForm">
+      <h4 class="ui-accordion-header">Add a new Company to CouponApp</h4>
+      <label>Id:</label> <input required [(ngModel)]="company.id" name="id" #id="ngModel" type="number">
+      <label>Copmany name:</label><input required [(ngModel)]="company.name" name="name" #name="ngModel" type="text">
+      <label>Email :</label> <input required [(ngModel)]="company.email" name="email" #email="ngModel" type="email">
+      <label>Password :</label> <input required [(ngModel)]="company.password" name="password" #password="ngModel" type="password">
+      <br>
+      <button type="submit" class="btn btn-primary" [disabled]="!addComapnyform.form.valid">Add Company</button>
+      <button type="button" class="btn btn-danger" (click)="addComapnyform.reset()">Reset</button>
+    </form>
+    {{answerfromServer}}
+  </div>
+</div>
+<div *ngIf="updatecompany">
+  <div>
+    <form (ngSubmit)="onUpdateCompany()" #updateComapnyform="ngForm">
+      <h4 class="ui-accordion-header">Update a Company to CouponApp</h4>
+      <label>Id:</label>
+      <select required [(ngModel)]="company.id" name="id" #id="ngModel" >
+        <option *ngFor="let x of allCompany">
+          {{x.id}} </option>
+        </select>
+      <label>Copmany name:</label><input required [(ngModel)]="company.name" name="name" #name="ngModel" type="text">
+      <label>Email C'ant change only for UNIQ :</label> <input required [(ngModel)]="company.email" name="email" #email="ngModel"
+        type="email">
+      <label>Password :</label> <input required [(ngModel)]="company.password" name="password" #password="ngModel" type="password">
+      <br>
+      <button type="submit" class="btn btn-secondary" [disabled]="!updateComapnyform.form.valid">Update Company</button>
+      <button type="button" class="btn btn-danger" (click)="updateComapnyform.reset()">Reset</button>
+    </form>
+    {{answerfromServer}}
+  </div>
+</div>
+<div *ngIf="removecompany">
+  <div>
+    <form (ngSubmit)="onRemoveComapny()" #removeCompanyform="ngForm">
+      <h4 class="ui-accordion-header">Delete Company From CouponApp</h4>
+      <label>Id:</label>
+      <select required [(ngModel)]="company.id" name="id" #id="ngModel" >
+        <option *ngFor="let x of allCompany">
+          {{x.id}} </option>
+        </select>
+      <button type="submit" class="btn btn-danger" [disabled]="!removeCompanyform.form.valid">REMOVE! Comapny</button>
+      <button type="button" class="btn btn-dark" (click)="removeCompanyform.reset()">Reset</button>
+    </form>
+  </div>
+  {{answerfromServer}}
+  <div *ngIf="iferror">
+  {{errorFromServer}}
+</div>
+</div>

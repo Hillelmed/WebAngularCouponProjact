@@ -1,0 +1,14 @@
+<ul class="list-group" *ngIf="pageready">
+  <li class="list-group-item active">{{details.custName}} : שלום</li>
+  <li class="list-group-item"><b> :הפרטים שלך</b><br>
+    {{details.custName}} - שם מלא<br>
+    {{details.email}} - אימייל<br>
+  </li>
+  <li *ngIf="details.coupons" class="list-group-item disabled">
+    :קופונים שברשותך
+    <div *ngFor="let x of details.coupons">
+      {{x.id}} : <b> מספר קופון</b> {{x.description}} : <b>תיאור </b> {{x.title}} : <b>כותרת </b> {{x.endDates}} : <b>תאריך
+        תפוגה </b> <br>
+    </div>
+  </li>
+</ul>

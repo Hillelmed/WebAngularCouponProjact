@@ -1,0 +1,6 @@
+{
+    "/CouponREStfull" : {
+        "target" : "http://reasysd:3240505",
+        "secure" : false
+    }
+}

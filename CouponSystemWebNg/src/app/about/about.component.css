@@ -1,0 +1,14 @@
+div{
+    height: 100%;
+}
+.myimg {
+    background-origin: padding-box;
+    border-bottom-right-radius: 50px;
+    border-radius: 20%;
+    height: 300px;
+    width: 250px;
+}
+.myicons{
+    height: 50px;
+    width: 50px;
+}
